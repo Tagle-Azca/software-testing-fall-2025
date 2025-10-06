@@ -62,6 +62,14 @@ def check_number_status(number):
     return "Zero"
 
 
+def test_check_number_status():
+    assert check_number_status(5) == "Positive"
+    assert check_number_status(-3) == "Negative"
+    assert check_number_status(0) == "Zero"
+    assert check_number_status(100) == "Positive"
+    assert check_number_status(-100) == "Negative"
+
+
 # 2
 def validate_password(password):
     """
@@ -84,6 +92,16 @@ def validate_password(password):
     return True
 
 
+def test_validate_password():
+    assert validate_password("Abcd123!") == True
+    assert validate_password("short1!") == False
+    assert validate_password("NoDigit!") == False
+    assert validate_password("nouppercas3!") == False
+    assert validate_password("NOLOWERCASE1!") == False
+    assert validate_password("NoSpecial1") == False
+    assert validate_password("Valid@Pass1") == True
+
+
 # 3
 def calculate_total_discount(total_amount):
     """
@@ -96,6 +114,16 @@ def calculate_total_discount(total_amount):
         return 0.1 * total_amount
 
     return 0.2 * total_amount
+
+
+def test_calculate_total_discount():
+    assert calculate_total_discount(50) == 0
+    assert calculate_total_discount(99) == 0
+    assert calculate_total_discount(100) == 10
+    assert calculate_total_discount(300) == 30
+    assert calculate_total_discount(500) == 50
+    assert calculate_total_discount(501) == 100.2
+    assert calculate_total_discount(1000) == 200
 
 
 # 4
@@ -120,6 +148,16 @@ def calculate_order_total(items):
             total_price += 0.9 * quantity * price_per_item  # 10% discount
 
     return total_price
+
+
+def test_calculate_order_total():
+    assert calculate_order_total([{"quantity": 3, "price": 10}]) == 30
+    assert calculate_order_total([{"quantity": 5, "price": 10}]) == 50
+    assert calculate_order_total([{"quantity": 6, "price": 10}]) == 57
+    assert calculate_order_total([{"quantity": 10, "price": 10}]) == 95
+    assert calculate_order_total([{"quantity": 11, "price": 10}]) == 99
+    assert calculate_order_total([{"quantity": 3, "price": 10}, {"quantity": 8, "price": 5}]) == 68
+    assert calculate_order_total([]) == 0
 
 
 # 5
@@ -152,6 +190,22 @@ def calculate_items_shipping_cost(items, shipping_method):
     raise ValueError("Invalid shipping method")
 
 
+def test_calculate_items_shipping_cost():
+    assert calculate_items_shipping_cost([{"weight": 3}], "standard") == 10
+    assert calculate_items_shipping_cost([{"weight": 5}], "standard") == 10
+    assert calculate_items_shipping_cost([{"weight": 6}], "standard") == 15
+    assert calculate_items_shipping_cost([{"weight": 10}], "standard") == 15
+    assert calculate_items_shipping_cost([{"weight": 11}], "standard") == 20
+    assert calculate_items_shipping_cost([{"weight": 3}], "express") == 20
+    assert calculate_items_shipping_cost([{"weight": 6}], "express") == 30
+    assert calculate_items_shipping_cost([{"weight": 11}], "express") == 40
+    try:
+        calculate_items_shipping_cost([{"weight": 5}], "overnight")
+        assert False
+    except ValueError:
+        assert True
+
+
 # 6
 def validate_login(username, password):
     """
@@ -163,6 +217,16 @@ def validate_login(username, password):
     return "Login Failed"
 
 
+def test_validate_login():
+    assert validate_login("user1", "pass1234") == "Login Successful"
+    assert validate_login("usr", "pass1234") == "Login Failed"
+    assert validate_login("user1", "pass12") == "Login Failed"
+    assert validate_login("verylongusernamehere", "pass1234") == "Login Successful"
+    assert validate_login("verylongusernameheree", "pass1234") == "Login Failed"
+    assert validate_login("user1", "verylongpassword") == "Login Successful"
+    assert validate_login("user1", "verylongpassword1") == "Login Failed"
+
+
 # 7
 def verify_age(age):
     """
@@ -172,6 +236,16 @@ def verify_age(age):
         return "Eligible"
 
     return "Not Eligible"
+
+
+def test_verify_age():
+    assert verify_age(17) == "Not Eligible"
+    assert verify_age(18) == "Eligible"
+    assert verify_age(30) == "Eligible"
+    assert verify_age(65) == "Eligible"
+    assert verify_age(66) == "Not Eligible"
+    assert verify_age(10) == "Not Eligible"
+    assert verify_age(70) == "Not Eligible"
 
 
 # 8
@@ -191,6 +265,18 @@ def categorize_product(price):
     return "Category D"
 
 
+def test_categorize_product():
+    assert categorize_product(9) == "Category D"
+    assert categorize_product(10) == "Category A"
+    assert categorize_product(30) == "Category A"
+    assert categorize_product(50) == "Category A"
+    assert categorize_product(51) == "Category B"
+    assert categorize_product(100) == "Category B"
+    assert categorize_product(101) == "Category C"
+    assert categorize_product(200) == "Category C"
+    assert categorize_product(201) == "Category D"
+
+
 # 9
 def validate_email(email):
     """
@@ -202,6 +288,17 @@ def validate_email(email):
     return "Invalid Email"
 
 
+def test_validate_email():
+    assert validate_email("a@b.c") == "Valid Email"
+    assert validate_email("test@example.com") == "Valid Email"
+    assert validate_email("a@b") == "Invalid Email"
+    assert validate_email("ab.c") == "Invalid Email"
+    assert validate_email("a@b") == "Invalid Email"
+    assert validate_email("abc") == "Invalid Email"
+    assert validate_email("a" * 51) == "Invalid Email"
+    assert validate_email("test@domain.co") == "Valid Email"
+
+
 # 10
 def celsius_to_fahrenheit(celsius):
     """
@@ -211,6 +308,16 @@ def celsius_to_fahrenheit(celsius):
         return (celsius * 9 / 5) + 32
 
     return "Invalid Temperature"
+
+
+def test_celsius_to_fahrenheit():
+    assert celsius_to_fahrenheit(0) == 32
+    assert celsius_to_fahrenheit(100) == 212
+    assert celsius_to_fahrenheit(-100) == -148
+    assert celsius_to_fahrenheit(25) == 77
+    assert celsius_to_fahrenheit(-101) == "Invalid Temperature"
+    assert celsius_to_fahrenheit(101) == "Invalid Temperature"
+    assert celsius_to_fahrenheit(50) == 122
 
 
 # 11
@@ -425,6 +532,20 @@ class TrafficLight:
         Provides the current traffic light state.
         """
         return self.state
+
+
+def test_traffic_light():
+    light = TrafficLight()
+    assert light.get_current_state() == "Red"
+    light.change_state()
+    assert light.get_current_state() == "Green"
+    light.change_state()
+    assert light.get_current_state() == "Yellow"
+    light.change_state()
+    assert light.get_current_state() == "Red"
+    light.change_state()
+    light.change_state()
+    assert light.get_current_state() == "Yellow"
 
 
 # 24
